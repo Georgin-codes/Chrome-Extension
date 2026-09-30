@@ -1,0 +1,28 @@
+.tabs{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #df7676;
+    border-radius:5px;
+    padding: 1em;
+    margin-bottom:0.5em;
+}
+.labels{
+    font-size: 1.5rem;
+    color:white;
+    margin-left:1em;
+}
+
+.inputs{
+    
+}
+
+.btn{
+    background-color: rgb(35, 127, 160);
+    color:white;
+    border:none;
+    padding:1em;
+    border-radius: 5px;
+    display: block;
+    margin:0 auto;
+}
