@@ -8,9 +8,24 @@ form.addEventListener("submit", (e)=>{
     e.preventDefault()
     const formdata = new FormData(form)
     const tabUrls = formdata.getAll("tab")
-    console.log(tabUrls)
-    }
-)
+    console.log(`Selected Tabs ${tabUrls}`)
+    //getting details of currently opened tabs
+    const tabsInStorage = getItems("leads")
+    console.log("Stored tabs:")
+    console.log(tabsInStorage)
+    //getting details of the selected tabs
+    let selectedTabs = []
+    for (let tabUrl of tabUrls){
+        tabsInStorage.forEach((tab)=>{
+            if(tabUrl === tab.url){
+                selectedTabs.push(tab)
+            } 
+        })
+    } 
+
+    console.log("Selected tab details:")
+    console.log(selectedTabs)
+})
    
 
 
