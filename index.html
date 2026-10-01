@@ -10,19 +10,21 @@
 <body>
     <main>
         <form id="form">
-            <section class="container" id="container">
-                <!-- <div class="tabs">
-                    <input class="inputs" id="checkbox" type="checkbox" value="">
-                    <label class="labels" for="checkbox">website</label>
-                </div>
-                <div class="tabs">
-                    <input class="inputs" id="checkbox" type="checkbox" value="">
-                    <label class="labels" for="checkbox">website</label>
-                </div> -->
-            </section>
+            <div class="container" id="container">
+            </div>
             <button class="btn">Create Workspace</button>
         </form>
     </main>
+
+    <div class="box-container" id="box-container">
+        <form class="workspace-form" id="workspace-form">
+            <input class="workspace-input" id="workspace-input" type="text" placeholder="Give a name for your workspace">
+            <div class="buttons-container" id="buttons">
+                <button class="buttons" id="save-btn">Save</button>
+                <button class="buttons" id="cancel-btn">Cancel</button>
+            </div>
+        </form>
+    </div>
     <script src="./index.js" type="module"></script>
 </body>
 </html>
