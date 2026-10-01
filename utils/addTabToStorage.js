@@ -1,13 +1,14 @@
 import { getCurrentTab } from './getCurrentTab.js'
+import { setItems } from './setItems.js'
 let leadsArray =  JSON.parse(localStorage.getItem("leads")) || []
 
 
-export async function addToStorage(){
+export async function addTabToStorage(){
     const data = await getCurrentTab()
     console.log(data)
     console.log(data.url)
     leadsArray.push(data)
-    localStorage.setItem("leads", JSON.stringify(leadsArray))
+    setItems("leads", leadsArray)
 }
 
 // async function main(){
