@@ -2,6 +2,7 @@ import { render } from './utils/render.js'
 import { addTabToStorage } from './utils/addTabToStorage.js'
 import { getItems } from './utils/getItems.js'
 import { setItems } from './utils/setItems.js'
+import { updateLeadsInStorage } from './utils/updateLeadsInStorage.js'
 
 
 const container = document.getElementById("container")
@@ -169,12 +170,7 @@ delMsgContainer.addEventListener("click", (e)=>{
 
         if(decision === "remove"){
 
-            const tabs = getItems("leads")
-            const updatedTabsInStorage = tabs.filter((tab)=>{
-                return ((tab.id !== delId) && (tab.url !== delUrl))
-            })
-            
-            setItems("leads", updatedTabsInStorage)
+            updateLeadsInStorage("leads", delId)
             render()
             delMsgContainer.style.display = "none"
 
@@ -205,8 +201,12 @@ delMsgContainer.addEventListener("click", (e)=>{
 
 })
 
+//when user directly closes tab in chrome
+chrome.tabs.onRemoved.addListener((tabId, removeInfo)=>{
+    updateLeadsInStorage("leads", tabId)
+    render()
 
-
+})
 
 
  start()
