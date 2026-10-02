@@ -27,8 +27,7 @@ main{
 }
 
 .inputs{
-    margin:0;
-    align-self: center;
+    margin:0 auto 0 1em;
 }
 
 .btn{
@@ -112,7 +111,24 @@ main{
     margin-left:1em;
 }
 
+
+.input:disabled, .delete-btn:disabled{
+    cursor: not-allowed;
+}
+
+.delete-btn{
+    background-color: transparent;
+    border:none;
+    color:white;
+    margin:0 0 0 auto;
+}
+
+
 .disabled{
     background-color: grey;
     cursor: not-allowed;
+}
+
+.input:disabled{
+    background-color: grey;
 }
