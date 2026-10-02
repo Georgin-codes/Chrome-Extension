@@ -77,10 +77,6 @@ main{
     left:0;
     right:0;
     margin: auto;
-
-    
-    
-   
     
 }
 
@@ -112,8 +108,16 @@ main{
 }
 
 
-.input:disabled, .delete-btn:disabled{
+.input:disabled, .btn:disabled{
     cursor: not-allowed;
+}
+
+.btn:disabled{
+    background-color: grey;
+}
+
+.disabled{
+    background-color: grey;
 }
 
 .delete-btn{
@@ -122,13 +126,36 @@ main{
     color:white;
     margin:0 0 0 auto;
 }
+  
 
+.delete-msg-container{
+    border:1px solid black;
+    padding:1em;
+    box-sizing: border-box;
+    background-color: white;
+    display:none;
+    justify-content: center;
+    align-items: center;
+    
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto 1em;
 
-.disabled{
-    background-color: grey;
-    cursor: not-allowed;
+    height:25vh;
 }
 
-.input:disabled{
-    background-color: grey;
+.del-buttons{
+    background-color: rgb(35, 127, 160);
+    border:none;
+    color:white;
+    padding:0.5em;
+    border-radius: 5px;
+}
+
+#remove-close-btn, #cancel-del-btn{
+    margin-left: 0.5em;
+
 }
