@@ -108,11 +108,11 @@ main{
 }
 
 
-.input:disabled, .btn:disabled{
+.input:disabled, .btn:disabled, #save-btn:disabled{
     cursor: not-allowed;
 }
 
-.btn:disabled{
+.btn:disabled, #save-btn:disabled{
     background-color: grey;
 }
 

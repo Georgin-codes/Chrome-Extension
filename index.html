@@ -18,18 +18,15 @@
 
     <div class="box-container" id="box-container">
         <form class="workspace-form" id="workspace-form">
-            <input class="workspace-input" id="workspace-input" type="text" placeholder="Give a name for your workspace">
+            <input class="workspace-input" id="workspace-input" name="workspace-input" type="text" placeholder="Give a name for your workspace">
             <div class="buttons-container" id="buttons">
-                <button class="buttons" id="save-btn">Save</button>
-                <button class="buttons" id="cancel-btn">Cancel</button>
+                <button class="buttons" id="save-btn" data-action="save" disabled>Save</button>
+                <button class="buttons" id="cancel-btn" data-action="cancel">Cancel</button>
             </div>
         </form>
     </div>
 
      <div class="delete-msg-container" id="delete-msg-container">
-            <!-- <button class="del-buttons" id="remove-btn" data-decision="remove">Remove tab</button>
-            <button class="del-buttons" id="remove-close-btn" data-decision="close">Remove & Close tab</button>
-            <button class="del-buttons" id="cancel-del-btn" data-decision="cancel">Cancel</button> -->
     </div>
 
     <script src="./index.js" type="module"></script>

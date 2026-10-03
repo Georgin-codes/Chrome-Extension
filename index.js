@@ -11,7 +11,11 @@ const saveBox = document.getElementById("box-container")
 const main = document.getElementById("main")
 const btn = document.getElementById("btn")
 const delMsgContainer = document.getElementById("delete-msg-container")
-// const cancelDel = document.getElementById("cancel-del-btn")
+
+const saveForm = document.getElementById("workspace-form")
+const cancelDel = document.getElementById("cancel-del-btn")
+const nameInput = document.getElementById("workspace-input")
+const saveBtn = document.getElementById("save-btn")
 
 
 
@@ -26,6 +30,7 @@ function disableBackground(){
     const inputElements = document.querySelectorAll(".inputs")
     const deleteBtns = document.querySelectorAll(".delete-btn")
 
+    btn.disabled = true
     elements.forEach((element)=>{
         element.classList.add("disabled")
         
@@ -48,6 +53,7 @@ function enableackground(){
     const inputElements = document.querySelectorAll(".inputs")
     const deleteBtns = document.querySelectorAll(".delete-btn")
 
+    btn.disabled = false
     elements.forEach((element)=>{
         element.classList.remove("disabled")
         
@@ -68,62 +74,84 @@ form.addEventListener("submit", (e)=>{
     saveBox.style.display="block"
     disableBackground()
 
-    const formdata = new FormData(form)
-    const tabIds = formdata.getAll("tab")
-    console.log(`Selected Tabs ${tabIds}`)
-    //getting details of currently opened tabs
-    const tabsInStorage = getItems("leads")
-    console.log("Stored tabs:")
-    console.log(tabsInStorage)
-    //getting details of the selected tabs
-    let selectedTabs = []
-    for (let tabId of tabIds){
-        tabsInStorage.forEach((tab)=>{
-            if(Number(tabId) === tab.id){
-                selectedTabs.push(tab)
-            } 
-        })
-    } 
+    // const formdata = new FormData(form)
+    // const tabIds = formdata.getAll("tab")
+    // console.log(`Selected Tabs ${tabIds}`)
 
-    console.log("Selected tab details:")
-    console.log(selectedTabs)
+    //getting details of currently opened tabs
+
+    // const tabsInStorage = getItems("leads")
+    // console.log("Stored tabs:")
+    // console.log(tabsInStorage)
+    // //getting details of the selected tabs
+    // let selectedTabs = []
+    // for (let tabId of tabIds){
+    //     tabsInStorage.forEach((tab)=>{
+    //         if(Number(tabId) === tab.id){
+    //             selectedTabs.push(tab)
+    //         } 
+    //     })
+    // } 
+
+    // console.log("Selected tab details:")
+    // console.log(selectedTabs)
 })
 
 
-// const saveForm = document.getElementById("workspace-form")
 
 
-// saveForm.addEventListener("submit", (e)=>{
-//     e.preventDefault()
+saveForm.addEventListener("submit", (e)=>{
+    e.preventDefault()
 
-//     if(e.target.id === "save-btn"){
+    const action = e.submitter.dataset.action
+
+    if(action === "save"){
+        
+        const saveFormData = new FormData(saveForm)
+        let workspaceName = saveFormData.get("workspace-input")
+        workspaceName.trim()
+
+        if(!workspaceName){
+            return console.error("Invalid workspace name")
+        }
+        
+        const checkedTabs = form.querySelectorAll('input[name="tab"]:checked')
+        //converting nodelist into array
+        const tabIds = Array.from(checkedTabs).map(tab => tab.value)
+
+        // getting details of stored tabs
+        const tabsInStorage = getItems("leads")
+        
+        //getting details of the selected tabs
+        let newWorkspace = []
+        for (let tabId of tabIds){
+            tabsInStorage.forEach((tab)=>{
+                if(Number(tabId) === tab.id){
+                    newWorkspace.push(tab)
+                } 
+            })
+        } 
+
+        //setting new key value pairs in local storage
+        setItems(workspaceName, newWorkspace)
 
 
-//     }
-//     else{
-//         saveBox.style.display="none"
+    }
+    else{
+        // console.log("Im here in else")
+        saveBox.style.display="none"
+        enableackground()
 
-//         const elements = document.querySelectorAll(".tabs")
-//         const inputElements = document.querySelectorAll(".inputs")
-//         const deleteBtns = document.querySelectorAll(".delete-btn")
+    }
 
-//         elements.forEach((element)=>{
-//             element.classList.remove("disabled")
-//         })
-
-//         inputElements.forEach((inputEl)=>{
-//             inputEl.disabled = false
-//         })
-
-//         deleteBtns.forEach((deleteBtn)=>{
-//             deleteBtn.disabled = false
-//         })
-
-//     }
-
-// })
+})
    
-
+//enabling save button only when user type a valid workspace name
+nameInput.addEventListener("input", ()=>{
+    saveBtn.disabled = true
+    const name = nameInput.value.trim()
+    saveBtn.disabled = !name
+})
 
 container.addEventListener("click", (e)=>{
 
@@ -138,21 +166,11 @@ container.addEventListener("click", (e)=>{
                                 <button class="del-buttons" id="remove-close-btn" data-decision="close" data-del-id="${deleteTabId}" data-del-url="${deleteTabUrl}">Remove & Close tab</button>
                                 <button class="del-buttons" id="cancel-del-btn" data-decision="cancel" data-del-id="${deleteTabId}" data-del-url="${deleteTabUrl}">Cancel</button>`
 
-        //getting tabs from local storage
-        // const tabs = getItems("leads")
-        // console.log(tabs)
-        // const updatedTabsInStorage = tabs.filter((tab)=>{
-        //   return ((tab.id !== deleteTabId) && (tab.url !== deleteTabUrl))
-        // })
-
-        // console.log(updatedTabsInStorage)
-        // setItems("leads", updatedTabsInStorage)
-        // render()
 
         //disabling background
         delMsgContainer.style.display = "flex"
         disableBackground()
-        btn.disabled = true
+        
 
     }
     
@@ -197,7 +215,7 @@ delMsgContainer.addEventListener("click", (e)=>{
     }
 
     enableackground()
-    btn.disabled = false
+    
 
 })
 
