@@ -13,8 +13,8 @@
             <div class="container" id="container">
             </div>
             <div class="btns">
-                <button class="btn" id="btn" disabled>Create Workspace</button>
-                <button class="btn" id="my-wokspaces-btn" disabled>My Workspaces</button>
+                <button class="btn" id="btn" disabled data-value="create">Create Workspace</button>
+                <button class="btn" id="my-wokspaces-btn" disabled data-value="view">My Workspaces</button>
             </div>
         </form>
     </main>
@@ -30,6 +30,41 @@
     </div>
 
      <div class="delete-msg-container" id="delete-msg-container">
+    </div>
+
+    <!-- <div class="saved-workspaces">
+        <div class="wokspaces">
+            <div class="title">
+                <h3>Title</h3>
+                <button class="workspace-btns">Open</button>
+                <button class="workspace-btns" id="view-btn">View</button>
+            </div>
+            <ul class="list" id="list">
+                <li><span class="lead-info">Orange</span> <button class="delete-btn">X</button></li>
+                <li>Banana</li>
+            </ul>
+        </div>
+    </div> -->
+
+    <div class="created-workspaces-container" id="created-workspaces-container">
+        <form class="created-workspaces-form">
+
+            <label for="workspace-values" class="select-label">Choose a workspace</label>
+
+            <select class="workspace-values" id="workspace-values" name="workspace-values">
+                <!-- <option value="">Apple</option>
+                <option value="">Bnanana</option>
+                <option value="">Orange</option> -->
+            </select>
+
+            <div class="select-btn-container">
+                <button class="select-buttons">View</button>
+                <button class="select-buttons">Open</button>
+            </div>
+
+        </form>
+
+        <button class="created-workspaces-close" id="created-workspaces-close">X</button>
     </div>
 
     <script src="./index.js" type="module"></script>

@@ -17,26 +17,41 @@ const saveForm = document.getElementById("workspace-form")
 const cancelDel = document.getElementById("cancel-del-btn")
 const nameInput = document.getElementById("workspace-input")
 const saveBtn = document.getElementById("save-btn")
-const MyWorkspaces = document.getElementById("my-wokspaces-btn")
 
-const  workspacesNamesArray = getItems("saved-workspaces") || []
-const  currentLeads = getItems("leads") || []
 
+const closeBtn = document.getElementById("created-workspaces-close")
+const createdWorkspaceContainer = document.getElementById("created-workspaces-container")
+
+
+// const viewBtn =document.getElementById("view-btn")
+// const list = document.getElementById("list")
+
+
+// viewBtn.addEventListener("click", ()=>{
+//     list.style.display = "block"
+// })
 
 
 async function start(){
     await addTabToStorage()
     render()
     
-    if(workspacesNamesArray.length!==0){
-        MyWorkspaces.disabled = false
-    }
+    // if(workspacesNamesArray.length!==0){
+    //     MyWorkspaces.disabled = false
+    // }
 
-    if(currentLeads.length!==0){
-        btn.disabled = false
-    }
+    // if(currentLeads.length!==0){
+    //     btn.disabled = false
+    // }
 
 }
+
+
+closeBtn.addEventListener("click", ()=>{
+    createdWorkspaceContainer.style.display = "none"
+    enableackground()
+
+})
 
 function disableBackground(){
 
@@ -85,8 +100,19 @@ function enableackground(){
 
 form.addEventListener("submit", (e)=>{
     e.preventDefault()
-    saveBox.style.display="block"
-    disableBackground()
+    const userDecision = e.submitter.dataset.value
+
+    if(userDecision === "create"){
+        saveBox.style.display="block"
+        disableBackground()
+    }
+    else if(userDecision === "view"){
+        createdWorkspaceContainer.style.display = "block"
+        disableBackground()
+
+
+    }
+    
 
     // const formdata = new FormData(form)
     // const tabIds = formdata.getAll("tab")
@@ -252,4 +278,4 @@ chrome.tabs.onRemoved.addListener((tabId, removeInfo)=>{
 
 
 
- //ADD PAGE FOR SEEING STORED WORKSPACES
+ //RENDER SAVED WORKSPACES

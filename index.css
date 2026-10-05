@@ -134,6 +134,8 @@ main{
     border:none;
     color:white;
     margin:0 0 0 auto;
+    padding-left:0;
+   
 }
   
 
@@ -167,4 +169,121 @@ main{
 #remove-close-btn, #cancel-del-btn{
     margin-left: 0.5em;
 
+}
+/* 
+.wokspaces{
+    border:1px solid black;
+    margin:0 1em;
+    text-align: center;
+}
+
+.list{
+    padding-left: 0;
+    list-style-type: none;
+    padding:0 4em;
+    box-sizing: border-box;
+    display: none;
+}
+
+.wokspaces li{
+    background-color: #df7676;
+    margin: 0.5em 0.5em;
+    padding:0.5em 0;
+    color:white;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    border-radius: 5px;
+    
+}
+
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.lead-info{
+    margin-left:  auto;
+}
+
+.workspace-btns{
+    margin: 0.5em 0 0.5em 0.5em;
+    background-color: rgb(35, 127, 160);
+    color:white;
+    border: none;
+    padding:0.5em;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 0.65rem;
+}
+
+.title h3{
+    margin: 0 auto 0 1em;
+}
+
+#view-btn{
+    margin-right: 1em;
+} */
+
+
+.created-workspaces-form{
+    display: flex;
+    flex-direction: column;
+    height:40vh;
+    padding: 3em;
+    
+}
+
+.select-buttons{
+    margin-top: 0.5em;
+    width: 20%;
+    margin-right:0.5em;
+    background-color: rgb(35, 127, 160);
+    color:white;
+    border: none;
+    padding: 0.25em 0;
+    border-radius: 3px;
+}
+
+.select-btn-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.workspace-values option, .select-label{
+    text-align: center;
+}
+
+.select-label{
+    font-size: 1rem;
+    margin-bottom: 0.5em;
+}
+
+.created-workspaces-close{
+    position: absolute;
+    top:0.5em;
+    right:0.5em;
+    border:none;
+    background-color: transparent;
+    color: lightgrey;
+}
+
+.created-workspaces-container{
+    border: 1px solid black;
+    background-color: white;
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto 1em;
+    display: none;
+    height:40vh;
+
+}
+
+.created-workspaces-close:active{
+    color:rgb(35, 127, 160);
 }
