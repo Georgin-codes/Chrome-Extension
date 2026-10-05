@@ -1,9 +1,14 @@
-const container = document.getElementById("container")
-
 import { getItems } from './getItems.js'
 
+const container = document.getElementById("container")
+const  workspacesNamesArray = getItems("saved-workspaces") || []
+const leads = getItems("leads") || []
+const btn = document.getElementById("btn")
+const MyWorkspaces = document.getElementById("my-wokspaces-btn")
+
+
 export function render(){
-    const leads = getItems("leads")
+    
     container.innerHTML = ""
     leads.forEach((lead)=>{
         const {title, url, id} = lead
@@ -15,18 +20,12 @@ export function render(){
 
     })
 
-    // const  workspacesNames = getItems("saved-workspaces")
+    if(workspacesNamesArray.length!==0){
+        MyWorkspaces.disabled = false
+    }
 
-    // if(workspacesNames){
-
-    //     if(workspacesNames.length!==0){
-    //         MyWorkspaces.disabled = false
-    //     }
-
-    //     return
-    // }
-    // else{
-    //     return
-    // }
-    
+    if(leads.length!==0){
+        btn.disabled = false
+    }
+        
 }
