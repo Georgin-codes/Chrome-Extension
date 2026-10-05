@@ -22,6 +22,7 @@ const saveBtn = document.getElementById("save-btn")
 const closeBtn = document.getElementById("created-workspaces-close")
 const createdWorkspaceContainer = document.getElementById("created-workspaces-container")
 const dropdownMenu = document.getElementById("workspace-values")
+const createdWorkspaceForm = document.getElementById("created-workspaces-form")
 
 
 // const viewBtn =document.getElementById("view-btn")
@@ -47,6 +48,38 @@ async function start(){
 
 }
 
+createdWorkspaceForm.addEventListener("submit", async (e)=>{
+    e.preventDefault()
+    const btnAction = e.submitter.dataset.userAction
+    if(btnAction){
+        if(btnAction === "view"){
+
+
+        }
+        else if (btnAction === "open"){
+            //getting user choice - workspace selection
+            const workspaceFormData = new FormData(createdWorkspaceForm)
+            const selectedWorkspaceName = workspaceFormData.get("workspace-values") 
+
+            //getting tab details of selected workspace
+            const selectedWorkspaceTabs = getItems(selectedWorkspaceName)
+            let selectedworkspaceUrls = []
+            selectedWorkspaceTabs.forEach((tab)=>{
+                selectedworkspaceUrls.push(tab.url)
+            })
+            console.log(selectedworkspaceUrls)
+
+            await Promise.all(
+                selectedworkspaceUrls.forEach((url)=>{
+                    chrome.tabs.create({url})
+                })
+
+            )
+                  
+        }
+    }
+
+})
 
 closeBtn.addEventListener("click", ()=>{
     createdWorkspaceContainer.style.display = "none"
@@ -118,7 +151,7 @@ form.addEventListener("submit", (e)=>{
             dropdownMenu.innerHTML = ""
             workspacesNames.forEach((workspaceName)=>{
                 console.log(workspaceName)
-                dropdownMenu.innerHTML += `<option value="">${workspaceName}</option>`
+                dropdownMenu.innerHTML += `<option value="${workspaceName}">${workspaceName}</option>`
             })
         }
         else{
