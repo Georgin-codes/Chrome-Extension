@@ -1,4 +1,5 @@
 const container = document.getElementById("container")
+
 import { getItems } from './getItems.js'
 
 export function render(){
@@ -14,5 +15,18 @@ export function render(){
 
     })
 
+    // const  workspacesNames = getItems("saved-workspaces")
 
+    // if(workspacesNames){
+
+    //     if(workspacesNames.length!==0){
+    //         MyWorkspaces.disabled = false
+    //     }
+
+    //     return
+    // }
+    // else{
+    //     return
+    // }
+    
 }

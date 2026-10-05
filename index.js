@@ -3,6 +3,7 @@ import { addTabToStorage } from './utils/addTabToStorage.js'
 import { getItems } from './utils/getItems.js'
 import { setItems } from './utils/setItems.js'
 import { updateLeadsInStorage } from './utils/updateLeadsInStorage.js'
+import { savedWorkspaces } from './utils/savedWorkspaces.js'
 
 
 const container = document.getElementById("container")
@@ -16,12 +17,25 @@ const saveForm = document.getElementById("workspace-form")
 const cancelDel = document.getElementById("cancel-del-btn")
 const nameInput = document.getElementById("workspace-input")
 const saveBtn = document.getElementById("save-btn")
+const MyWorkspaces = document.getElementById("my-wokspaces-btn")
+
+const  workspacesNamesArray = getItems("saved-workspaces") || []
+const  currentLeads = getItems("leads") || []
 
 
 
 async function start(){
     await addTabToStorage()
     render()
+    
+    if(workspacesNamesArray.length!==0){
+        MyWorkspaces.disabled = false
+    }
+
+    if(currentLeads.length!==0){
+        btn.disabled = false
+    }
+
 }
 
 function disableBackground(){
@@ -106,7 +120,7 @@ saveForm.addEventListener("submit", (e)=>{
     const action = e.submitter.dataset.action
 
     if(action === "save"){
-        
+
         const saveFormData = new FormData(saveForm)
         let workspaceName = saveFormData.get("workspace-input")
         workspaceName.trim()
@@ -132,15 +146,21 @@ saveForm.addEventListener("submit", (e)=>{
             })
         } 
 
+        saveBox.style.display="none"
+        enableackground()
         //setting new key value pairs in local storage
         setItems(workspaceName, newWorkspace)
 
+        //adding saved workspace name to workspacesNames array in local storage
+        savedWorkspaces(workspaceName)
+        render()
 
     }
     else{
         // console.log("Im here in else")
         saveBox.style.display="none"
         enableackground()
+        render()
 
     }
 
@@ -228,3 +248,8 @@ chrome.tabs.onRemoved.addListener((tabId, removeInfo)=>{
 
 
  start()
+
+
+
+
+ //ADD PAGE FOR SEEING STORED WORKSPACES

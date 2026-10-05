@@ -30,14 +30,23 @@ main{
     margin:0 auto 0 1em;
 }
 
+.btns{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .btn{
     background-color: rgb(35, 127, 160);
     color:white;
     border:none;
-    padding:1em;
+    padding:0.5em;
     border-radius: 5px;
-    display: block;
-    margin:0 auto;
+    
+}
+
+#btn{
+    margin-right:1em;
 }
 
 

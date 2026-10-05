@@ -12,16 +12,19 @@
         <form id="form">
             <div class="container" id="container">
             </div>
-            <button class="btn" id="btn">Create Workspace</button>
+            <div class="btns">
+                <button class="btn" id="btn" disabled>Create Workspace</button>
+                <button class="btn" id="my-wokspaces-btn" disabled>My Workspaces</button>
+            </div>
         </form>
     </main>
 
     <div class="box-container" id="box-container">
         <form class="workspace-form" id="workspace-form">
-            <input class="workspace-input" id="workspace-input" name="workspace-input" type="text" placeholder="Give a name for your workspace">
+            <input class="workspace-input" id="workspace-input" name="workspace-input" type="text" required placeholder="Give a name for your workspace">
             <div class="buttons-container" id="buttons">
                 <button class="buttons" id="save-btn" data-action="save" disabled>Save</button>
-                <button class="buttons" id="cancel-btn" data-action="cancel">Cancel</button>
+                <button class="buttons" id="cancel-btn" data-action="cancel" formnovalidate>Cancel</button>
             </div>
         </form>
     </div>
