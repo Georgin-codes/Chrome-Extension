@@ -21,6 +21,7 @@ const saveBtn = document.getElementById("save-btn")
 
 const closeBtn = document.getElementById("created-workspaces-close")
 const createdWorkspaceContainer = document.getElementById("created-workspaces-container")
+const dropdownMenu = document.getElementById("workspace-values")
 
 
 // const viewBtn =document.getElementById("view-btn")
@@ -100,6 +101,8 @@ function enableackground(){
 
 form.addEventListener("submit", (e)=>{
     e.preventDefault()
+    let workspacesNames = getItems("saved-workspaces") || []
+
     const userDecision = e.submitter.dataset.value
 
     if(userDecision === "create"){
@@ -109,6 +112,19 @@ form.addEventListener("submit", (e)=>{
     else if(userDecision === "view"){
         createdWorkspaceContainer.style.display = "block"
         disableBackground()
+
+        //rendering saved workspace names as a drop down
+        if(workspacesNames.length!==0){
+            dropdownMenu.innerHTML = ""
+            workspacesNames.forEach((workspaceName)=>{
+                console.log(workspaceName)
+                dropdownMenu.innerHTML += `<option value="">${workspaceName}</option>`
+            })
+        }
+        else{
+            dropdownMenu.innerHTML = `<option value="">No workspaces yet</option>`
+        }
+        
 
 
     }
