@@ -67,14 +67,8 @@ createdWorkspaceForm.addEventListener("submit", async (e)=>{
             selectedWorkspaceTabs.forEach((tab)=>{
                 selectedworkspaceUrls.push(tab.url)
             })
-            console.log(selectedworkspaceUrls)
 
-            await Promise.all(
-                selectedworkspaceUrls.forEach((url)=>{
-                    chrome.tabs.create({url})
-                })
-
-            )
+            await chrome.windows.create({url:selectedworkspaceUrls})
                   
         }
     }
@@ -327,4 +321,4 @@ chrome.tabs.onRemoved.addListener((tabId, removeInfo)=>{
 
 
 
- //RENDER SAVED WORKSPACES
+ //OPEN TABS IN NEW WINDOW
