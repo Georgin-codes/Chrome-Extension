@@ -31,6 +31,7 @@ const workspaceElementsClose = document.getElementById("workspace-elements-close
 const workspaceElForm = document.getElementById("workspace-elements-form")
 
 const worspaceBtns = document.getElementById("workspace-btns")
+const response = document.getElementById("response")
 
 
 // const viewBtn =document.getElementById("view-btn")
@@ -141,13 +142,27 @@ workspaceElForm.addEventListener("submit", (e)=>{
             const updatedWorkspaceInStorage = getItems(workspaceName)
             workspaceTabs.innerHTML = ""
             updatedWorkspaceInStorage.forEach((tab)=>{
-                const { id, url, title} = tab
-                workspaceTabs.innerHTML += `<div class="workspace-tabs">
+            const { id, url, title} = tab
+            workspaceTabs.innerHTML += `<div class="workspace-tabs">
                                             <input class="workspace-elements-inputs" id="checkbox-${id}" type="checkbox" name="workspace-tabs" value="${id}">
                                             <label class="labels" for="checkbox-${id}" name="workspace-tabs">${title}</label>
                                         </div>`
 
             })
+            
+            //if user delete al tabs from selected workspace
+            if(updatedWorkspaceInStorage.length === 0 ){
+                let savedNames = getItems("saved-workspaces")
+                savedNames = savedNames.filter((name)=>{
+                    return name !== workspaceName
+                })
+                //updating and storing workspace names in local storage
+                setItems("saved-workspaces", savedNames)
+
+                localStorage.removeItem(workspaceName)
+                workspaceEl.style.display = "none"
+                enableackground()
+            }
 
         }
         
@@ -157,13 +172,13 @@ workspaceElForm.addEventListener("submit", (e)=>{
 
 workspaceElementsClose .addEventListener("click", ()=>{
     workspaceEl.style.display = "none"
-    enableackground()
+    enableBackground()
 
 })
 
 closeBtn.addEventListener("click", ()=>{
     createdWorkspaceContainer.style.display = "none"
-    enableackground()
+    enableBackground()
 
 })
 
@@ -190,7 +205,7 @@ function disableBackground(){
 }
 
 
-function enableackground(){
+function enableBackground(){
 
     const elements = document.querySelectorAll(".tabs")
     const inputElements = document.querySelectorAll(".inputs")
@@ -219,6 +234,7 @@ form.addEventListener("submit", (e)=>{
     const userDecision = e.submitter.dataset.value
 
     if(userDecision === "create"){
+        response.textContent = "Give a name for your workspace"
         saveBox.style.display="block"
         disableBackground()
     }
@@ -275,14 +291,6 @@ saveForm.addEventListener("submit", (e)=>{
     const action = e.submitter.dataset.action
 
     if(action === "save"){
-
-        const saveFormData = new FormData(saveForm)
-        let workspaceName = saveFormData.get("workspace-input")
-        workspaceName.trim()
-
-        if(!workspaceName){
-            return console.error("Invalid workspace name")
-        }
         
         const checkedTabs = form.querySelectorAll('input[name="tab"]:checked')
         //converting nodelist into array
@@ -301,20 +309,34 @@ saveForm.addEventListener("submit", (e)=>{
             })
         } 
 
-        saveBox.style.display="none"
-        enableackground()
+
+        const saveFormData = new FormData(saveForm)
+        let workspaceName = saveFormData.get("workspace-input")
+        workspaceName = workspaceName.trim()
+
+        if(!workspaceName){
+            response.textContent = "Invalid workspace name"
+            return console.error("Invalid workspace name")
+        }
+        //adding saved workspace name to workspacesNames array in local storage
+        const output = savedWorkspaces(workspaceName)
+        response.textContent = output.message
+
+        if(!output.ok){
+            return     
+        }
+
         //setting new key value pairs in local storage
         setItems(workspaceName, newWorkspace)
-
-        //adding saved workspace name to workspacesNames array in local storage
-        savedWorkspaces(workspaceName)
+        saveBox.style.display="none"
+        enableBackground()
         render()
 
     }
     else{
         // console.log("Im here in else")
         saveBox.style.display="none"
-        enableackground()
+        enableBackground()
         render()
 
     }
@@ -389,7 +411,7 @@ delMsgContainer.addEventListener("click", (e)=>{
         
     }
 
-    enableackground()
+    enableBackground()
     
 
 })

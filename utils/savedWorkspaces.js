@@ -7,12 +7,13 @@ export function savedWorkspaces(name){
 
     let workspacesNames = getItems("saved-workspaces") || []
 
-    workspacesNames.push(name)
-    
-    
-    setItems("saved-workspaces", workspacesNames)
-
-    if(workspacesNames.length!==0){
-            MyWorkspaces.disabled = false
+    if(!workspacesNames.includes(name)){
+        workspacesNames.push(name)
+        setItems("saved-workspaces", workspacesNames)
+        return {message : "Workspace created successfully", ok:true}
     }
+    else{
+        return {message: "Name already exists, choose a different one", ok:false}
+    }
+    
 }
