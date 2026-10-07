@@ -9,7 +9,7 @@ main{
     padding:1em;
 }
 
-.tabs{
+.tabs, .workspace-tabs{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,12 +21,12 @@ main{
 .labels{
     /* font-size: 1.2rem; */
     color:white;
-    margin-left:1em;
-    padding-bottom: 0.25em;
+    /* margin-left:1em; */
+    /* padding-bottom: 0.25em; */
     
 }
 
-.inputs{
+.inputs, .workspace-elements-inputs{
     margin:0 auto 0 1em;
 }
 
@@ -117,11 +117,11 @@ main{
 }
 
 
-.input:disabled, .btn:disabled, #save-btn:disabled{
+.input:disabled, .btn:disabled, #save-btn:disabled, .select-buttons:disabled{
     cursor: not-allowed;
 }
 
-.btn:disabled, #save-btn:disabled{
+.btn:disabled, #save-btn:disabled, .select-buttons:disabled{
     background-color: grey;
 }
 
@@ -286,4 +286,35 @@ main{
 
 .created-workspaces-close:active{
     color:rgb(35, 127, 160);
+}
+
+.workspace-elements{
+   
+    padding:3em 1em 1em;
+    box-sizing: border-box;
+    position: fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto;
+    display:none;
+    background-color: white;
+}
+
+.workspace-tabs{
+    padding-right: 0.5em;
+    padding-left: 0.5em;
+
+}
+
+.workspace-tabs input{
+    padding-left:0;
+
+}
+
+.workspace-btns{
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }

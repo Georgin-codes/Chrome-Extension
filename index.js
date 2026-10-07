@@ -23,6 +23,14 @@ const closeBtn = document.getElementById("created-workspaces-close")
 const createdWorkspaceContainer = document.getElementById("created-workspaces-container")
 const dropdownMenu = document.getElementById("workspace-values")
 const createdWorkspaceForm = document.getElementById("created-workspaces-form")
+const workspaceTabs = document.getElementById("tabs-container")
+const workspaceEl = document.getElementById("workspace-elements")
+const workspaceElementsClose = document.getElementById("workspace-elements-close")
+
+// const workspaceElInputs = document.querySelectorAll("workspace-elements-inputs")
+const workspaceElForm = document.getElementById("workspace-elements-form")
+
+const worspaceBtns = document.getElementById("workspace-btns")
 
 
 // const viewBtn =document.getElementById("view-btn")
@@ -50,19 +58,38 @@ async function start(){
 
 createdWorkspaceForm.addEventListener("submit", async (e)=>{
     e.preventDefault()
+    
+    //closing dropdown
+    createdWorkspaceContainer.style.display = "none"
+
+     //getting user choice - workspace selection
+    const workspaceFormData = new FormData(createdWorkspaceForm)
+    const selectedWorkspaceName = workspaceFormData.get("workspace-values") 
+    //getting tab details of selected workspace
+    const selectedWorkspaceTabs = getItems(selectedWorkspaceName)
+
     const btnAction = e.submitter.dataset.userAction
+
     if(btnAction){
         if(btnAction === "view"){
+            workspaceEl.style.display = "block"
+            workspaceTabs.innerHTML = ""
+            selectedWorkspaceTabs.forEach((tab)=>{
+                const { id, url, title} = tab
+                workspaceTabs.innerHTML += `<div class="workspace-tabs">
+                                            <input class="workspace-elements-inputs" id="checkbox-${id}" type="checkbox" name="workspace-tabs" value="${id}">
+                                            <label class="labels" for="checkbox-${id}" name="workspace-tabs">${title}</label>
+                                        </div>`
+
+            })
+
+            worspaceBtns.innerHTML = `<button class="select-buttons"id="workspace-el-delete" data-choose="delete" data-workspace-name="${selectedWorkspaceName}" disabled>Delete</button>`
 
 
         }
         else if (btnAction === "open"){
-            //getting user choice - workspace selection
-            const workspaceFormData = new FormData(createdWorkspaceForm)
-            const selectedWorkspaceName = workspaceFormData.get("workspace-values") 
-
-            //getting tab details of selected workspace
-            const selectedWorkspaceTabs = getItems(selectedWorkspaceName)
+           
+            
             let selectedworkspaceUrls = []
             selectedWorkspaceTabs.forEach((tab)=>{
                 selectedworkspaceUrls.push(tab.url)
@@ -72,6 +99,65 @@ createdWorkspaceForm.addEventListener("submit", async (e)=>{
                   
         }
     }
+
+})
+
+//HERE HERE HERE
+
+workspaceElForm.addEventListener("change", (e)=>{
+    // console.log(e)
+    const workspaceElDelete = document.getElementById("workspace-el-delete")
+    workspaceElDelete.disabled = !e.target.checked
+
+})
+
+workspaceElForm.addEventListener("submit", (e)=>{
+    e.preventDefault()
+    // const workspaceName = e.
+    const userAction = e.submitter.dataset.choose
+    const workspaceName = e.submitter.dataset.workspaceName
+    const workspaceTabsArray = getItems(workspaceName)
+    
+    if(userAction){
+
+        if(userAction === "delete"){
+            const checkedTabsValues = workspaceElForm.querySelectorAll('input[name="workspace-tabs"]:checked')
+            //converting nodelist to array
+            const checkedTabsValuesArray = Array.from(checkedTabsValues).map(tab => Number(tab.value))
+            // console.log(checkedTabsValuesArray)
+            // checkedTabsValuesArray.forEach((tabid)=>{
+
+
+            // })
+            let updatedWorkspaceEl = []
+            for (const workspaceTabs of workspaceTabsArray){
+                if(!checkedTabsValuesArray.includes(workspaceTabs.id)){
+                    updatedWorkspaceEl.push(workspaceTabs)
+                }
+            }
+            
+            //updating local storage
+            setItems(workspaceName, updatedWorkspaceEl)
+            const updatedWorkspaceInStorage = getItems(workspaceName)
+            workspaceTabs.innerHTML = ""
+            updatedWorkspaceInStorage.forEach((tab)=>{
+                const { id, url, title} = tab
+                workspaceTabs.innerHTML += `<div class="workspace-tabs">
+                                            <input class="workspace-elements-inputs" id="checkbox-${id}" type="checkbox" name="workspace-tabs" value="${id}">
+                                            <label class="labels" for="checkbox-${id}" name="workspace-tabs">${title}</label>
+                                        </div>`
+
+            })
+
+        }
+        
+    }
+
+})
+
+workspaceElementsClose .addEventListener("click", ()=>{
+    workspaceEl.style.display = "none"
+    enableackground()
 
 })
 
@@ -321,4 +407,4 @@ chrome.tabs.onRemoved.addListener((tabId, removeInfo)=>{
 
 
 
- //OPEN TABS IN NEW WINDOW
+ //EDIT workspace-elements
