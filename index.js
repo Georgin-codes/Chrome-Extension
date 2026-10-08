@@ -306,11 +306,19 @@ saveForm.addEventListener("submit", async(e)=>{
         const saveFormData = new FormData(saveForm)
         let workspaceName = saveFormData.get("workspace-input")
         workspaceName = workspaceName.trim()
+        const isValid = /^[A-Za-z ]+$/.test(workspaceName)
+
 
         if(!workspaceName){
             response.textContent = "Invalid workspace name"
             return console.error("Invalid workspace name")
         }
+
+        if(!isValid){
+            response.textContent = "Workspace name can contain letters and spaces only."
+            return console.error("Workspace name can contain letters and spaces only.")
+        }
+
         //adding saved workspace name to workspacesNames array in local storage
         const output = await savedWorkspaces(workspaceName)
 
@@ -325,7 +333,7 @@ saveForm.addEventListener("submit", async(e)=>{
 
         setTimeout(()=>{
             saveBox.style.display="none"
-        }, 1500)
+        }, 1000)
         
         enableBackground()
         await render()
@@ -415,11 +423,11 @@ delMsgContainer.addEventListener("click", async (e)=>{
 })
 
 //when user directly closes tab in chrome
-chrome.tabs.onRemoved.addListener(async (tabId, removeInfo)=>{
-    await updateLeadsInStorage("leads", tabId)
-    await render()
+// chrome.tabs.onRemoved.addListener(async (tabId, removeInfo)=>{
+//     await updateLeadsInStorage("leads", tabId)
+//     await render()
 
-})
+// })
 
 
  await start()

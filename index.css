@@ -170,60 +170,6 @@ main{
     margin-left: 0.5em;
 
 }
-/* 
-.wokspaces{
-    border:1px solid black;
-    margin:0 1em;
-    text-align: center;
-}
-
-.list{
-    padding-left: 0;
-    list-style-type: none;
-    padding:0 4em;
-    box-sizing: border-box;
-    display: none;
-}
-
-.wokspaces li{
-    background-color: #df7676;
-    margin: 0.5em 0.5em;
-    padding:0.5em 0;
-    color:white;
-    display: flex;
-    justify-content: center;
-    box-sizing: border-box;
-    border-radius: 5px;
-    
-}
-
-.title{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.lead-info{
-    margin-left:  auto;
-}
-
-.workspace-btns{
-    margin: 0.5em 0 0.5em 0.5em;
-    background-color: rgb(35, 127, 160);
-    color:white;
-    border: none;
-    padding:0.5em;
-    box-sizing: border-box;
-    border-radius: 5px;
-    font-size: 0.65rem;
-}
-
-.title h3{
-    margin: 0 auto 0 1em;
-}
-
-#view-btn{
-    margin-right: 1em;
-} */
 
 
 .created-workspaces-form{
@@ -322,4 +268,9 @@ main{
 .extension-intro{
     text-align: center;
     margin-top:10em;
+}
+
+
+#response{
+    font-weight: 500;
 }
