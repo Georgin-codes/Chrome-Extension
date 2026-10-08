@@ -426,7 +426,7 @@ delMsgContainer.addEventListener("click", (e)=>{
 
             const tabs = getItems("leads")
             const updatedTabsInStorage = tabs.filter((tab)=>{
-                return ((tab.id !== delId) && (tab.url !== delUrl))
+                return (tab.id !== delId)
             })
             
             setItems("leads", updatedTabsInStorage)
