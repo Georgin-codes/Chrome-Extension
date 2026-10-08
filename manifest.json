@@ -3,8 +3,11 @@
   "name": "Workspace",
   "version": "1.0.0",
   "description": "A simple chrome extension to save and edit workspace",
+   "icons": {
+        "128": "images/icon.png"
+    },
   "action":{
-    "default_icon": "./images/app-icon.jpg",
+    "default_icon": "images/icon.png",
     "default_popup": "index.html"
   },
   "background": {"service_worker": "background.js",
