@@ -1,6 +1,6 @@
 import { setItems } from "./setItems.js" 
 import { getItems } from "./getItems.js" 
-const MyWorkspaces = document.getElementById("my-wokspaces-btn")
+// const MyWorkspaces = document.getElementById("my-wokspaces-btn")
 
 
 export function savedWorkspaces(name){

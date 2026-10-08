@@ -57,6 +57,21 @@ async function start(){
 
 }
 
+
+
+// enabling create workspace button 
+container.addEventListener("change", (e) => {
+    
+    if (e.target.matches('input[name="tab"]')) {
+
+        const checked = container.querySelector('input[name="tab"]:checked')
+        //checked is not null if atleast one box is checked
+        btn.disabled = !checked
+    }
+
+})
+
+
 createdWorkspaceForm.addEventListener("submit", async (e)=>{
     e.preventDefault()
     
@@ -161,7 +176,7 @@ workspaceElForm.addEventListener("submit", (e)=>{
 
                 localStorage.removeItem(workspaceName)
                 workspaceEl.style.display = "none"
-                enableackground()
+                enableBackground()
             }
 
         }
@@ -211,7 +226,7 @@ function enableBackground(){
     const inputElements = document.querySelectorAll(".inputs")
     const deleteBtns = document.querySelectorAll(".delete-btn")
 
-    btn.disabled = false
+    // btn.disabled = false
     elements.forEach((element)=>{
         element.classList.remove("disabled")
         

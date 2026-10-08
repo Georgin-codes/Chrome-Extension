@@ -24,8 +24,8 @@ export function render(){
         MyWorkspaces.disabled = false
     }
 
-    if(leads.length!==0){
-        btn.disabled = false
-    }
+    // if(leads.length!==0){
+    //     btn.disabled = false
+    // }
         
 }
