@@ -4,6 +4,8 @@ import { getItems } from './utils/getItems.js'
 import { setItems } from './utils/setItems.js'
 import { updateLeadsInStorage } from './utils/updateLeadsInStorage.js'
 import { savedWorkspaces } from './utils/savedWorkspaces.js'
+import { disableBackground } from './utils/disableBackground.js'
+import { enableBackground } from './utils/enableBackground.js'
 
 
 const container = document.getElementById("container")
@@ -27,12 +29,10 @@ const workspaceTabs = document.getElementById("tabs-container")
 const workspaceEl = document.getElementById("workspace-elements")
 const workspaceElementsClose = document.getElementById("workspace-elements-close")
 
-// const workspaceElInputs = document.querySelectorAll("workspace-elements-inputs")
-const workspaceElForm = document.getElementById("workspace-elements-form")
 
+const workspaceElForm = document.getElementById("workspace-elements-form")
 const worspaceBtns = document.getElementById("workspace-btns")
 const response = document.getElementById("response")
-
 const MyWorkspaces = document.getElementById("my-wokspaces-btn")
 
 
@@ -42,7 +42,6 @@ async function start(){
     await render()
 
 }
-
 
 
 // enabling create workspace button 
@@ -104,7 +103,6 @@ createdWorkspaceForm.addEventListener("submit", async (e)=>{
 
 })
 
-//HERE HERE HERE
 
 workspaceElForm.addEventListener("change", (e)=>{
     // console.log(e)
@@ -115,7 +113,6 @@ workspaceElForm.addEventListener("change", (e)=>{
 
 workspaceElForm.addEventListener("submit", async (e)=>{
     e.preventDefault()
-    // const workspaceName = e.
     const userAction = e.submitter.dataset.choose
     const workspaceName = e.submitter.dataset.workspaceName
     const workspaceTabsArray = await getItems(workspaceName)
@@ -126,11 +123,7 @@ workspaceElForm.addEventListener("submit", async (e)=>{
             const checkedTabsValues = workspaceElForm.querySelectorAll('input[name="workspace-tabs"]:checked')
             //converting nodelist to array
             const checkedTabsValuesArray = Array.from(checkedTabsValues).map(tab => Number(tab.value))
-            // console.log(checkedTabsValuesArray)
-            // checkedTabsValuesArray.forEach((tabid)=>{
-
-
-            // })
+            
             let updatedWorkspaceEl = []
             for (const workspaceTabs of workspaceTabsArray){
                 if(!checkedTabsValuesArray.includes(workspaceTabs.id)){
@@ -155,21 +148,19 @@ workspaceElForm.addEventListener("submit", async (e)=>{
             if(updatedWorkspaceInStorage.length === 0 ){
 
                 await chrome.storage.local.remove(workspaceName)
-                // localStorage.removeItem(workspaceName)
 
                 let savedNames = await getItems("saved-workspaces")
                 savedNames = savedNames.filter((name)=>{
                     return name !== workspaceName
                 })
 
-                //updating and storing workspace names in local storage
+                //updating and storing workspace names in storage
                 if(savedNames.length !== 0){
                     await setItems("saved-workspaces", savedNames)
                 }
                 else{
                     //removing saved-workspace array if it is empty
                     await chrome.storage.local.remove("saved-workspaces")
-                    // localStorage.removeItem("saved-workspaces")
                     MyWorkspaces.disabled = true
                 }
                 
@@ -193,53 +184,8 @@ workspaceElementsClose .addEventListener("click", ()=>{
 closeBtn.addEventListener("click", ()=>{
     createdWorkspaceContainer.style.display = "none"
     enableBackground()
-
 })
 
-function disableBackground(){
-
-    const elements = document.querySelectorAll(".tabs")
-    const inputElements = document.querySelectorAll(".inputs")
-    const deleteBtns = document.querySelectorAll(".delete-btn")
-
-    btn.disabled = true
-    elements.forEach((element)=>{
-        element.classList.add("disabled")
-        
-    })
-
-    inputElements.forEach((inputEl)=>{
-        inputEl.disabled = true
-    })
-
-    deleteBtns.forEach((deleteBtn)=>{
-        deleteBtn.disabled = true
-    })
-
-}
-
-
-function enableBackground(){
-
-    const elements = document.querySelectorAll(".tabs")
-    const inputElements = document.querySelectorAll(".inputs")
-    const deleteBtns = document.querySelectorAll(".delete-btn")
-
-    // btn.disabled = false
-    elements.forEach((element)=>{
-        element.classList.remove("disabled")
-        
-    })
-
-    inputElements.forEach((inputEl)=>{
-        inputEl.disabled = false
-    })
-
-    deleteBtns.forEach((deleteBtn)=>{
-        deleteBtn.disabled = false
-    })
-
-}
 
 form.addEventListener("submit", async (e)=>{
     e.preventDefault()
@@ -268,8 +214,6 @@ form.addEventListener("submit", async (e)=>{
             dropdownMenu.innerHTML = `<option value="">No workspaces yet</option>`
         }
         
-
-
     }
     
 })
@@ -319,7 +263,7 @@ saveForm.addEventListener("submit", async(e)=>{
             return console.error("Workspace name can contain letters and spaces only.")
         }
 
-        //adding saved workspace name to workspacesNames array in local storage
+        //adding saved workspace name to workspacesNames array in storage
         const output = await savedWorkspaces(workspaceName)
 
         response.textContent = output.message
@@ -328,7 +272,7 @@ saveForm.addEventListener("submit", async(e)=>{
             return     
         }
 
-        //setting new key value pairs in local storage
+        //setting new key value pairs in storage
         await setItems(workspaceName, newWorkspace)
 
         setTimeout(()=>{
@@ -340,7 +284,6 @@ saveForm.addEventListener("submit", async(e)=>{
         
     }
     else{
-        // console.log("Im here in else")
         saveBox.style.display="none"
         enableBackground()
         await render()
@@ -360,7 +303,6 @@ container.addEventListener("click", (e)=>{
 
     if(e.target.dataset.id){
 
-
         console.log(e.target.dataset.id)
         const deleteTabId = e.target.dataset.id
         const deleteTabUrl = e.target.dataset.url
@@ -374,7 +316,6 @@ container.addEventListener("click", (e)=>{
         delMsgContainer.style.display = "flex"
         disableBackground()
         
-
     }
     
 })
@@ -394,7 +335,6 @@ delMsgContainer.addEventListener("click", async (e)=>{
             await updateLeadsInStorage("leads", delId)
             await render()
             delMsgContainer.style.display = "none"
-
 
         }
         else if(decision === "close"){
@@ -431,8 +371,3 @@ delMsgContainer.addEventListener("click", async (e)=>{
 
 
  await start()
-
-
-
-
- //EDIT workspace-elements

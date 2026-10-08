@@ -1,7 +1,6 @@
 import { getItems } from './getItems.js'
 
 const container = document.getElementById("container")
-
 const MyWorkspaces = document.getElementById("my-wokspaces-btn")
 
 
@@ -35,15 +34,4 @@ export async function render(){
         MyWorkspaces.disabled = false
     }
 
-
-        
 }
-
-  // if(leads.length === 0){
-
-    //     container.innerHTML = `<div class="extension-intro">
-    //                                 <p>Open tabs to create your workspace</p>
-    //                             </div>`
-        
-    // }
-    // else{

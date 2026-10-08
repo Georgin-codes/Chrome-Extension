@@ -27,7 +27,6 @@ export async function addTabToStorage(){
         await setItems("leads", leadsArray)
     }
 
-        
 }
     
 
