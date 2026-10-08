@@ -33,6 +33,8 @@ const workspaceElForm = document.getElementById("workspace-elements-form")
 const worspaceBtns = document.getElementById("workspace-btns")
 const response = document.getElementById("response")
 
+const MyWorkspaces = document.getElementById("my-wokspaces-btn")
+
 
 // const viewBtn =document.getElementById("view-btn")
 // const list = document.getElementById("list")
@@ -165,16 +167,27 @@ workspaceElForm.addEventListener("submit", (e)=>{
 
             })
             
-            //if user delete al tabs from selected workspace
+            //if user delete all tabs from selected workspace
             if(updatedWorkspaceInStorage.length === 0 ){
+
+                localStorage.removeItem(workspaceName)
+
                 let savedNames = getItems("saved-workspaces")
                 savedNames = savedNames.filter((name)=>{
                     return name !== workspaceName
                 })
-                //updating and storing workspace names in local storage
-                setItems("saved-workspaces", savedNames)
 
-                localStorage.removeItem(workspaceName)
+                //updating and storing workspace names in local storage
+                if(savedNames.length !== 0){
+                    setItems("saved-workspaces", savedNames)
+                }
+                else{
+                    //removing saved-workspace array if it is empty
+                    localStorage.removeItem("saved-workspaces")
+                    MyWorkspaces.disabled = true
+                }
+                
+                
                 workspaceEl.style.display = "none"
                 enableBackground()
             }
@@ -343,10 +356,13 @@ saveForm.addEventListener("submit", (e)=>{
 
         //setting new key value pairs in local storage
         setItems(workspaceName, newWorkspace)
-        saveBox.style.display="none"
+        setTimeout(()=>{
+            saveBox.style.display="none"
+        }, 1500)
+        
         enableBackground()
         render()
-
+        
     }
     else{
         // console.log("Im here in else")
