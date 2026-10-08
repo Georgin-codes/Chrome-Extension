@@ -12,7 +12,13 @@ export function render(){
     
     container.innerHTML = ""
 
-  
+    if(leads.length === 0){
+
+        container.innerHTML = `<div class="extension-intro">
+                                    <p>Open tabs to create workspaces. You can access your saved workspaces here even after you close or delete the tabs.</p>
+                                </div>`
+    }
+    else{
 
         leads.forEach((lead)=>{
         const {title, url, id} = lead
@@ -23,9 +29,7 @@ export function render(){
                                 </div>`
 
         })
-
-
-    
+    }
 
     if(workspacesNamesArray.length!==0){
         MyWorkspaces.disabled = false

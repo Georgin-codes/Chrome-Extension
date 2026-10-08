@@ -318,3 +318,8 @@ main{
     justify-content: center;
     align-items: center;
 }
+
+.extension-intro{
+    text-align: center;
+    margin-top:10em;
+}
