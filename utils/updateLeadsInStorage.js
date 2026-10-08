@@ -1,12 +1,12 @@
 import { getItems } from './getItems.js'
 import { setItems } from './setItems.js'
 
-export function updateLeadsInStorage(key, id){
+export async function updateLeadsInStorage(key, id){
 
-    const tabs = getItems(key)
+    const tabs = await getItems(key)
     const updatedTabsInStorage = tabs.filter((tab)=>{
         return (tab.id !== id)
     })
             
-    setItems(key, updatedTabsInStorage)
+    await setItems(key, updatedTabsInStorage)
 }

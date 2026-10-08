@@ -36,26 +36,10 @@ const response = document.getElementById("response")
 const MyWorkspaces = document.getElementById("my-wokspaces-btn")
 
 
-// const viewBtn =document.getElementById("view-btn")
-// const list = document.getElementById("list")
-
-
-// viewBtn.addEventListener("click", ()=>{
-//     list.style.display = "block"
-// })
-
 
 async function start(){
     await addTabToStorage()
-    render()
-    
-    // if(workspacesNamesArray.length!==0){
-    //     MyWorkspaces.disabled = false
-    // }
-
-    // if(currentLeads.length!==0){
-    //     btn.disabled = false
-    // }
+    await render()
 
 }
 
@@ -84,7 +68,7 @@ createdWorkspaceForm.addEventListener("submit", async (e)=>{
     const workspaceFormData = new FormData(createdWorkspaceForm)
     const selectedWorkspaceName = workspaceFormData.get("workspace-values") 
     //getting tab details of selected workspace
-    const selectedWorkspaceTabs = getItems(selectedWorkspaceName)
+    const selectedWorkspaceTabs = await getItems(selectedWorkspaceName)
 
     const btnAction = e.submitter.dataset.userAction
 
@@ -129,12 +113,12 @@ workspaceElForm.addEventListener("change", (e)=>{
 
 })
 
-workspaceElForm.addEventListener("submit", (e)=>{
+workspaceElForm.addEventListener("submit", async (e)=>{
     e.preventDefault()
     // const workspaceName = e.
     const userAction = e.submitter.dataset.choose
     const workspaceName = e.submitter.dataset.workspaceName
-    const workspaceTabsArray = getItems(workspaceName)
+    const workspaceTabsArray = await getItems(workspaceName)
     
     if(userAction){
 
@@ -155,8 +139,8 @@ workspaceElForm.addEventListener("submit", (e)=>{
             }
             
             //updating local storage
-            setItems(workspaceName, updatedWorkspaceEl)
-            const updatedWorkspaceInStorage = getItems(workspaceName)
+            await setItems(workspaceName, updatedWorkspaceEl)
+            const updatedWorkspaceInStorage = await getItems(workspaceName)
             workspaceTabs.innerHTML = ""
             updatedWorkspaceInStorage.forEach((tab)=>{
             const { id, url, title} = tab
@@ -170,20 +154,22 @@ workspaceElForm.addEventListener("submit", (e)=>{
             //if user delete all tabs from selected workspace
             if(updatedWorkspaceInStorage.length === 0 ){
 
-                localStorage.removeItem(workspaceName)
+                await chrome.storage.local.remove(workspaceName)
+                // localStorage.removeItem(workspaceName)
 
-                let savedNames = getItems("saved-workspaces")
+                let savedNames = await getItems("saved-workspaces")
                 savedNames = savedNames.filter((name)=>{
                     return name !== workspaceName
                 })
 
                 //updating and storing workspace names in local storage
                 if(savedNames.length !== 0){
-                    setItems("saved-workspaces", savedNames)
+                    await setItems("saved-workspaces", savedNames)
                 }
                 else{
                     //removing saved-workspace array if it is empty
-                    localStorage.removeItem("saved-workspaces")
+                    await chrome.storage.local.remove("saved-workspaces")
+                    // localStorage.removeItem("saved-workspaces")
                     MyWorkspaces.disabled = true
                 }
                 
@@ -255,9 +241,9 @@ function enableBackground(){
 
 }
 
-form.addEventListener("submit", (e)=>{
+form.addEventListener("submit", async (e)=>{
     e.preventDefault()
-    let workspacesNames = getItems("saved-workspaces") || []
+    let workspacesNames = await getItems("saved-workspaces") || []
 
     const userDecision = e.submitter.dataset.value
 
@@ -286,34 +272,12 @@ form.addEventListener("submit", (e)=>{
 
     }
     
-
-    // const formdata = new FormData(form)
-    // const tabIds = formdata.getAll("tab")
-    // console.log(`Selected Tabs ${tabIds}`)
-
-    //getting details of currently opened tabs
-
-    // const tabsInStorage = getItems("leads")
-    // console.log("Stored tabs:")
-    // console.log(tabsInStorage)
-    // //getting details of the selected tabs
-    // let selectedTabs = []
-    // for (let tabId of tabIds){
-    //     tabsInStorage.forEach((tab)=>{
-    //         if(Number(tabId) === tab.id){
-    //             selectedTabs.push(tab)
-    //         } 
-    //     })
-    // } 
-
-    // console.log("Selected tab details:")
-    // console.log(selectedTabs)
 })
 
 
 
 
-saveForm.addEventListener("submit", (e)=>{
+saveForm.addEventListener("submit", async(e)=>{
     e.preventDefault()
 
     const action = e.submitter.dataset.action
@@ -325,7 +289,8 @@ saveForm.addEventListener("submit", (e)=>{
         const tabIds = Array.from(checkedTabs).map(tab => tab.value)
 
         // getting details of stored tabs
-        const tabsInStorage = getItems("leads")
+        const tabsInStorage = await getItems("leads")
+        
         
         //getting details of the selected tabs
         let newWorkspace = []
@@ -347,7 +312,8 @@ saveForm.addEventListener("submit", (e)=>{
             return console.error("Invalid workspace name")
         }
         //adding saved workspace name to workspacesNames array in local storage
-        const output = savedWorkspaces(workspaceName)
+        const output = await savedWorkspaces(workspaceName)
+
         response.textContent = output.message
 
         if(!output.ok){
@@ -355,20 +321,21 @@ saveForm.addEventListener("submit", (e)=>{
         }
 
         //setting new key value pairs in local storage
-        setItems(workspaceName, newWorkspace)
+        await setItems(workspaceName, newWorkspace)
+
         setTimeout(()=>{
             saveBox.style.display="none"
         }, 1500)
         
         enableBackground()
-        render()
+        await render()
         
     }
     else{
         // console.log("Im here in else")
         saveBox.style.display="none"
         enableBackground()
-        render()
+        await render()
 
     }
 
@@ -406,7 +373,7 @@ container.addEventListener("click", (e)=>{
 
 
 //choosing deleting option
-delMsgContainer.addEventListener("click", (e)=>{
+delMsgContainer.addEventListener("click", async (e)=>{
 
     let { decision, delId, delUrl } = e.target.dataset
     delId = Number(delId)
@@ -416,22 +383,22 @@ delMsgContainer.addEventListener("click", (e)=>{
 
         if(decision === "remove"){
 
-            updateLeadsInStorage("leads", delId)
-            render()
+            await updateLeadsInStorage("leads", delId)
+            await render()
             delMsgContainer.style.display = "none"
 
 
         }
         else if(decision === "close"){
 
-            const tabs = getItems("leads")
+            const tabs = await getItems("leads")
             const updatedTabsInStorage = tabs.filter((tab)=>{
                 return (tab.id !== delId)
             })
             
-            setItems("leads", updatedTabsInStorage)
+            await setItems("leads", updatedTabsInStorage)
             chrome.tabs.remove(delId)
-            render()
+            await render()
             delMsgContainer.style.display = "none"
 
         }
@@ -448,14 +415,14 @@ delMsgContainer.addEventListener("click", (e)=>{
 })
 
 //when user directly closes tab in chrome
-chrome.tabs.onRemoved.addListener((tabId, removeInfo)=>{
-    updateLeadsInStorage("leads", tabId)
-    render()
+chrome.tabs.onRemoved.addListener(async (tabId, removeInfo)=>{
+    await updateLeadsInStorage("leads", tabId)
+    await render()
 
 })
 
 
- start()
+ await start()
 
 
 

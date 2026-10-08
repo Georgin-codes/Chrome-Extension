@@ -1,9 +1,13 @@
 import { getCurrentTab } from './getCurrentTab.js'
 import { setItems } from './setItems.js'
-let leadsArray =  JSON.parse(localStorage.getItem("leads")) || []
+import { getItems } from './getItems.js'
+// let leadsArray =  JSON.parse(localStorage.getItem("leads")) || []
+
 
 
 export async function addTabToStorage(){
+
+    let leadsArray =  await getItems("leads") || []
 
     const data = await getCurrentTab()
 
@@ -25,13 +29,13 @@ export async function addTabToStorage(){
 
         if(!exist){
             leadsArray.push(data)
-            setItems("leads", leadsArray)
+            await setItems("leads", leadsArray)
         }
    
     }
     else{
         leadsArray.push(data)
-        setItems("leads", leadsArray)
+        await setItems("leads", leadsArray)
     }
 
   

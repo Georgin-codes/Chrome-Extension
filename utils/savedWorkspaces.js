@@ -3,13 +3,13 @@ import { getItems } from "./getItems.js"
 // const MyWorkspaces = document.getElementById("my-wokspaces-btn")
 
 
-export function savedWorkspaces(name){
+export async function savedWorkspaces(name){
 
-    let workspacesNames = getItems("saved-workspaces") || []
+    let workspacesNames = await getItems("saved-workspaces") || []
 
     if(!workspacesNames.includes(name)){
         workspacesNames.push(name)
-        setItems("saved-workspaces", workspacesNames)
+        await setItems("saved-workspaces", workspacesNames)
         return {message : "Workspace created successfully", ok:true}
     }
     else{
