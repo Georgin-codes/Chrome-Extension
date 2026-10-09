@@ -9,10 +9,11 @@ export async function updateTabTitle(tab){
         return lead.id === tab.id
     })
 
-    if(tabToBeUpdated){
-        tabToBeUpdated.title = tab.title
-        tabToBeUpdated.url = tab.url
-        await setItems("leads", leadsArray)
+    if(!tabToBeUpdated){
+        return
     }
-    
+
+    tabToBeUpdated.title = tab.title
+    tabToBeUpdated.url = tab.url
+    await setItems("leads", leadsArray)
 }

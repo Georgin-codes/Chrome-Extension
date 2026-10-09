@@ -9,20 +9,19 @@ export async function addTabToStorage(){
 
     const data = await getCurrentTab()
 
-    if(leadsArray.length!==0){
-
-    
-        const existLead = leadsArray.find((lead)=>{
-            return lead.id === data.id
-        })
-
-        if(!existLead){
-            leadsArray.push(data)
-            await setItems("leads", leadsArray)
-        }
-   
+    if(!data.url){
+        return
     }
-    else{
+
+    if(data.url.startsWith("chrome://") || data.url.startsWith("chrome-extension://")){
+        return                      
+    }
+
+    const existLead = leadsArray.find((lead)=>{
+        return lead.id === data.id
+    })
+
+    if(!existLead){
         leadsArray.push(data)
         await setItems("leads", leadsArray)
     }
