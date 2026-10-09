@@ -275,6 +275,8 @@ saveForm.addEventListener("submit", async(e)=>{
             return     
         }
 
+        saveBtn.disabled = true
+
         //setting new key value pairs in storage
         await setItems(workspaceName, newWorkspace)
 
