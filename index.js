@@ -97,6 +97,7 @@ createdWorkspaceForm.addEventListener("submit", async (e)=>{
             })
 
             await chrome.windows.create({url:selectedworkspaceUrls})
+            enableBackground()
                   
         }
     }
