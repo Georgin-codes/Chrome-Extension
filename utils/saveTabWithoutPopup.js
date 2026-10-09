@@ -1,5 +1,5 @@
-import { getItems  } from "./getItems"
-import { setItems } from "./setItems"
+import { getItems  } from "./getItems.js"
+import { setItems } from "./setItems.js"
 
 export async function saveTabWithoutPopup(tab){
 
@@ -36,3 +36,4 @@ export async function saveTabWithoutPopup(tab){
     await setItems("leads", leads)
 
 }
+

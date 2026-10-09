@@ -17,8 +17,16 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab)=>{
 
 //when user directly closes tab in chrome
 chrome.tabs.onRemoved.addListener(async (tabId, removeInfo)=>{
-    await updateLeadsInStorage("leads", tabId)
-    //no need to render if popup is closed
+    //if the user has already closed the tab it may cause an error.
+    try{
+        await updateLeadsInStorage("leads", tabId)
+        //no need to render if popup is closed
+    }
+    catch(error){
+        console.error(error)
+        console.log(`Tab may already be closed: ${tabId}`)
+    }
+    
 })
 
 //when new tabs are created and pop up is not opening

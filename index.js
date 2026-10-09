@@ -332,7 +332,7 @@ delMsgContainer.addEventListener("click", async (e)=>{
     if(decision && delId && delUrl){
 
         if(decision === "remove"){
-
+            //delete and render in extension
             await updateLeadsInStorage("leads", delId)
             await render()
             delMsgContainer.style.display = "none"
@@ -364,11 +364,11 @@ delMsgContainer.addEventListener("click", async (e)=>{
 })
 
 //when user directly closes tab in chrome
-// chrome.tabs.onRemoved.addListener(async (tabId, removeInfo)=>{
-//     await updateLeadsInStorage("leads", tabId)
-//     await render()
+chrome.tabs.onRemoved.addListener(async (tabId, removeInfo)=>{
+    await updateLeadsInStorage("leads", tabId)
+    await render()
 
-// })
+})
 
 
  await start()

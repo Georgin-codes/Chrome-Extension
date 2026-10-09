@@ -9,7 +9,7 @@ export async function addTabToStorage(){
 
     const data = await getCurrentTab()
 
-    if(!data.url){
+    if(!data?.url){
         return
     }
 
