@@ -34,6 +34,7 @@ const workspaceElForm = document.getElementById("workspace-elements-form")
 const worspaceBtns = document.getElementById("workspace-btns")
 const response = document.getElementById("response")
 const MyWorkspaces = document.getElementById("my-wokspaces-btn")
+const workspaceTitle = document.getElementById("workspace-title")
 
 
 
@@ -73,6 +74,7 @@ createdWorkspaceForm.addEventListener("submit", async (e)=>{
 
     if(btnAction){
         if(btnAction === "view"){
+            workspaceTitle.textContent = selectedWorkspaceName
             workspaceEl.style.display = "block"
             workspaceTabs.innerHTML = ""
             selectedWorkspaceTabs.forEach((tab)=>{
@@ -280,6 +282,8 @@ saveForm.addEventListener("submit", async(e)=>{
             saveBox.style.display="none"
         }, 1000)
         
+        //clearing name input
+        nameInput.value = ""
         enableBackground()
         await render()
         
@@ -363,7 +367,7 @@ delMsgContainer.addEventListener("click", async (e)=>{
 
 })
 
-//when user directly closes tab in chrome
+//when user directly closes tab in chrome when popup open
 chrome.tabs.onRemoved.addListener(async (tabId, removeInfo)=>{
     await updateLeadsInStorage("leads", tabId)
     await render()

@@ -238,7 +238,7 @@ main{
 
 .workspace-elements{
    
-    padding:3em 1em 1em;
+    padding:1em 1em 1em;
     box-sizing: border-box;
     position: fixed;
     top:0;
@@ -275,4 +275,15 @@ main{
 
 #response{
     font-weight: 500;
+}
+
+.workspace-title{
+    margin-top:0;
+    text-align: center;
+    color: #353232;
+}
+
+.workspace-tabs label{
+    margin-right:0.5em;
+
 }
